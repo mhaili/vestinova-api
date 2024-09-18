@@ -1,6 +1,6 @@
 import express from "express";
 import User from "./entities/User";
-import sequelize from "./sequelize.config";
+import sequelize from "../sequelize.config";
 const initDb = async () => {
     try {
         await sequelize.authenticate();
