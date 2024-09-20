@@ -14,4 +14,8 @@ export class SequelizeUserRepository implements IUserRepository {
     async createUser(data: any): Promise<any> {
         return UserEntity.create(data);
     }
+
+    async getUserByEmail(email: string): Promise<UserEntity> {
+        return UserEntity.findOne({ where: { email } });
+    }
 }

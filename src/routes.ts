@@ -7,7 +7,8 @@ const userRepository = new SequelizeUserRepository();
 const authController = new AuthController(userRepository);
 
 router.get("/api/auth", authController.getHandler);
-router.post("/api/auth", authController.postHandler);
+router.post("/api/auth/register", authController.registerHandler);
+router.post("/api/auth/login", authController.loginHandler);
 router.put("/api/auth", authController.putHandler);
 router.delete("/api/auth", authController.deleteHandler);
 
