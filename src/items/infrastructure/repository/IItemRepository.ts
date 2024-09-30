@@ -3,4 +3,6 @@ import ItemEntity from "../entity/Item.entity";
 
 export interface IItemRepository {
     createItem(item: ItemModel): Promise<ItemEntity[]>;
+    deleteItem(id: string): void;
+    findItemById(id: string): Promise<ItemEntity>;
 }

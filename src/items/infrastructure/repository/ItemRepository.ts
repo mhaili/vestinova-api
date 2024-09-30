@@ -6,4 +6,10 @@ export class ItemRepository implements IItemRepository {
         await ItemEntity.create(item);
         return await ItemEntity.findAll();
     }
+    async deleteItem(id): Promise<void> {
+        await ItemEntity.destroy({where: {id}});
+    }
+    async findItemById(id): Promise<ItemEntity | null> {
+        return await ItemEntity.findByPk(id);
+    }
 }
