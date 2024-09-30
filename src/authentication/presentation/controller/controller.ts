@@ -11,15 +11,8 @@ export class AuthController {
 
   constructor(userRepository: IUserRepository) {
     this.userRepository = userRepository;
-    this.getHandler = this.getHandler.bind(this);
     this.registerHandler = this.registerHandler.bind(this);
-    this.putHandler = this.putHandler.bind(this);
-    this.deleteHandler = this.deleteHandler.bind(this);
     this.loginHandler = this.loginHandler.bind(this);
-  }
-
-  public async getHandler(req: Request, res: Response) {
-    res.send('Hello World');
   }
 
   public async registerHandler(req: Request, res: Response) {
@@ -42,13 +35,5 @@ export class AuthController {
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-
-  }
-
-  public async putHandler(req: Request, res: Response) {
-      res.send('Hello World');
-  }
-  public async deleteHandler(req: Request, res: Response) {
-      res.send('Hello World');
   }
 }
