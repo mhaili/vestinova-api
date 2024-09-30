@@ -18,5 +18,6 @@ const itemController = new ItemController(itemRepository);
 
 router.post("/api/items", authGuard, itemController.createItem);
 router.delete("/api/items/:id", authGuard, itemController.deleteItem);
+router.get("/api/items/:id", authGuard, itemController.findItemById);
 
 export default router;
