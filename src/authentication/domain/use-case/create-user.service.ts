@@ -2,6 +2,7 @@ import {UserModel} from "../model/User.model";
 import UserEntity from "../../infrastructure/entity/User.entity";
 import {SequelizeUserRepository} from "../../infrastructure/repository/SequelizeUserRepository";
 import hashPasswordService from "../../../shared/service/hashPassword.service";
+import jwtService from "../../../shared/service/jwt.service";
 
 export class CreateUserService {
     constructor(
@@ -14,7 +15,7 @@ export class CreateUserService {
             email: string,
             password: string
         }
-    ): Promise<UserEntity | Error> {
+    ): Promise<{token: string | Error}> {
         let newUser = new UserModel()
         const firstnameError = newUser.setFirstname(data.firstname)
         if (firstnameError instanceof Error) {
@@ -33,7 +34,14 @@ export class CreateUserService {
             throw passwordError;
         }
         newUser = Object.assign({}, newUser);
-        newUser.password = await hashPasswordService.hashPassword(newUser.password);
-        return await this.userRepository.createUser(newUser);
+        try {
+            newUser.password = await hashPasswordService.hashPassword(newUser.password);
+            const createdUser = await this.userRepository.createUser(newUser);
+            return {
+                token: await jwtService.generateToken({ id: createdUser.id }, '30d')
+            }
+        } catch (error) {
+            return error;
+        }
     }
 }
