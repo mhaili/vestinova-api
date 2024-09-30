@@ -1,8 +1,7 @@
 import { IUserRepository } from './IUserRepository';
 import UserEntity from '../../infrastructure/entity/User.entity';
-import sequelize from "../../../../sequelize.config";
 
-export class SequelizeUserRepository implements IUserRepository {
+export class UserRepository implements IUserRepository {
     async getUserById(id: string): Promise<UserEntity> {
         return UserEntity.findByPk(id);
     }

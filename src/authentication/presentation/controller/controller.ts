@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import {CreateUserService} from "../../domain/use-case/create-user.service";
 import {IUserRepository} from "../../infrastructure/repository/IUserRepository";
-import {isCreateUserDto} from "../dto/creatUser.dto";
+import {isCreateUserDto} from "../dto/createUser.dto";
 import hashPasswordService from "../../../shared/service/hashPassword.service";
 import {isLoginUserDto} from "../dto/loginUser.dto";
 import {LoginUserService} from "../../domain/use-case/login-user.service";

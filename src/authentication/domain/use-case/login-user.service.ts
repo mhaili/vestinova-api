@@ -1,10 +1,10 @@
-import {SequelizeUserRepository} from "../../infrastructure/repository/SequelizeUserRepository";
+import {UserRepository} from "../../infrastructure/repository/UserRepository";
 import hashPasswordService from "../../../shared/service/hashPassword.service";
 import jwtService from "../../../shared/service/jwt.service";
 
 export class LoginUserService {
     constructor(
-        private readonly userRepository: SequelizeUserRepository
+        private readonly userRepository: UserRepository
     ) {}
 
     public async execute(

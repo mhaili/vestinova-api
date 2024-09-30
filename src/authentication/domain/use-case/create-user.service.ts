@@ -1,12 +1,11 @@
 import {UserModel} from "../model/User.model";
-import UserEntity from "../../infrastructure/entity/User.entity";
-import {SequelizeUserRepository} from "../../infrastructure/repository/SequelizeUserRepository";
+import {UserRepository} from "../../infrastructure/repository/UserRepository";
 import hashPasswordService from "../../../shared/service/hashPassword.service";
 import jwtService from "../../../shared/service/jwt.service";
 
 export class CreateUserService {
     constructor(
-        private readonly userRepository: SequelizeUserRepository
+        private readonly userRepository: UserRepository
     ) {}
     async execute(
         data: {

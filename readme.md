@@ -41,9 +41,8 @@ Vestinova is a web application that allows people to sell their used items. User
 
 ## Roadmap
 
-- [ ] User authentication and authorization
-- [ ] Item creation
-- [ ] Item browsing
+- [x] User authentication and authorization
+- [ ] Item module
 - [ ] Search functionality
 - [ ] User profiles
 - [ ] Ratings and reviews
