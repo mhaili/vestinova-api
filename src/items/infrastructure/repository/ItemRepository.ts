@@ -12,4 +12,7 @@ export class ItemRepository implements IItemRepository {
     async findItemById(id): Promise<ItemEntity | null> {
         return await ItemEntity.findByPk(id);
     }
+    async findAllItems(pagination): Promise<ItemEntity[]> {
+        return await ItemEntity.findAll({limit: pagination});
+    }
 }

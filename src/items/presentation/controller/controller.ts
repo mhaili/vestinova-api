@@ -3,6 +3,7 @@ import ItemEntity from "../../infrastructure/entity/Item.entity";
 import {CreateItemService} from "../../domain/use-case/create-item.service";
 import {isCreateItemDto} from "../dto/createItem.dto";
 import {DeleteItemService} from "../../domain/use-case/delete-item.service";
+import {FindItemByIdService} from "../../domain/use-case/find-item-by-id.service";
 
 export class ItemController {
     private readonly itemRepository: ItemRepository;
@@ -37,7 +38,7 @@ export class ItemController {
     public async findItemById(req, res): Promise<ItemEntity | Error> {
         const itemId = req.params.id;
         try {
-            const item = await this.itemRepository.findItemById(itemId);
+            const item = await new FindItemByIdService(this.itemRepository).findItemById(itemId);
             if (!item) return res.status(404).json({ error: 'Item not found' });
             res.status(200).json(item);
         } catch (error) {
