@@ -6,4 +6,5 @@ export interface IItemRepository {
     deleteItem(id: string): void;
     findItemById(id: string): Promise<ItemEntity>;
     findAllItems(pagination: number): Promise<ItemEntity[]>;
+    updateItem(id: string, item: ItemEntity): Promise<ItemEntity | null>;
 }

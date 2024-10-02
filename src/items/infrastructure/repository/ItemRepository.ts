@@ -15,4 +15,9 @@ export class ItemRepository implements IItemRepository {
     async findAllItems(pagination): Promise<ItemEntity[]> {
         return await ItemEntity.findAll({limit: pagination});
     }
+
+    async updateItem(id: string, item: ItemEntity): Promise<ItemEntity | null> {
+        await ItemEntity.update(item, {where: {id}});
+        return await ItemEntity.findByPk(id);
+    }
 }
