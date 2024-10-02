@@ -15,7 +15,6 @@ export class CreateItemService {
             const nameError = newItem.setName(item.name);
             const imageIds = await Promise.all(images.map(image => this.imageStorageService.uploadImage(image)));
             newItem.setImagesIds(imageIds);
-            console.log("============================")
             console.log(newItem);
             if (nameError instanceof Error) {
                 return nameError;

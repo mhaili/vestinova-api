@@ -18,7 +18,7 @@ export class ItemController {
         this.updateItem = this.updateItem.bind(this);
     }
     public async createItem(req, res): Promise<ItemEntity[] | Error> {
-        const item = JSON.parse(req.body.json);
+        const item = req.body.json;
         const images = req.files;
         if (!isCreateItemDto(item)) return res.status(400).json({ item: item });
         try {
