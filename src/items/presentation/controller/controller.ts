@@ -18,10 +18,12 @@ export class ItemController {
         this.updateItem = this.updateItem.bind(this);
     }
     public async createItem(req, res): Promise<ItemEntity[] | Error> {
-        const item = req.body;
-        if (!isCreateItemDto(item)) return res.status(400).json({ error: 'Invalid body' });
+        const item = JSON.parse(req.body.json);
+        const images = req.files;
+        if (!isCreateItemDto(item)) return res.status(400).json({ item: item });
         try {
-            const createdItem = await new CreateItemService(this.itemRepository).execute(item);
+            const createdItem = await new CreateItemService(this.itemRepository).execute(item, images);
+            console.log(createdItem)
             res.status(201).json(createdItem);
         } catch (error) {
             res.status(400).json({ error: error.message });

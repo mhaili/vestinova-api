@@ -4,8 +4,10 @@ import {UserRepository} from "./authentication/infrastructure/repository/UserRep
 import authGuard from "./shared/middleware/auth.guard";
 import {ItemRepository} from "./items/infrastructure/repository/ItemRepository";
 import {ItemController} from "./items/presentation/controller/controller";
+import multer from 'multer';
 
 const router = express.Router();
+const upload = multer()
 
 const userRepository = new UserRepository();
 const authController = new AuthController(userRepository);
@@ -16,7 +18,7 @@ router.post("/api/auth/login", authController.loginHandler);
 const itemRepository = new ItemRepository();
 const itemController = new ItemController(itemRepository);
 
-router.post("/api/items", authGuard, itemController.createItem);
+router.post("/api/items", authGuard, upload.array('images'), itemController.createItem);
 router.delete("/api/items/:id", authGuard, itemController.deleteItem);
 router.get("/api/items/:id", authGuard, itemController.findItemById);
 router.get("/api/items", authGuard, itemController.getItems);

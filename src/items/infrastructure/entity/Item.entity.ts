@@ -7,6 +7,7 @@ class ItemEntity extends Model {
     public description!: string;
     public price!: number;
     public userId!: string;
+    public imageIds!: string[];
 }
 
 ItemEntity.init(
@@ -35,7 +36,11 @@ ItemEntity.init(
         userId: {
             type: DataTypes.UUID,
             allowNull: false,
-        }
+        },
+        imageIds: {
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: true,
+        },
     },
     {
         sequelize,
