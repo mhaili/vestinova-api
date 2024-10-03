@@ -4,8 +4,22 @@ import CategoryEntity from "../entity/Category.entity";
 
 export class ItemRepository implements IItemRepository {
     async createItem(item): Promise<ItemEntity[]> {
-        await ItemEntity.create(item);
-        return await ItemEntity.findAll();
+        const newItem = await ItemEntity.create(item);
+        if (item.categoryIds && item.categoryIds.length > 0) {
+            const categories = await CategoryEntity.findAll({
+                where: {
+                    id: item.categoryIds
+                }
+            });
+           for (const category of categories) {
+               await newItem.addCategoryEntity(category)
+           }
+        }
+        return await ItemEntity.findAll(
+            {
+                include: CategoryEntity
+            }
+        );
     }
     async deleteItem(id): Promise<void> {
         await ItemEntity.destroy({where: {id}});
@@ -14,7 +28,12 @@ export class ItemRepository implements IItemRepository {
         return await ItemEntity.findByPk(id);
     }
     async findAllItems(pagination): Promise<ItemEntity[]> {
-        return await ItemEntity.findAll({limit: pagination});
+        return await ItemEntity.findAll(
+            {
+                limit: pagination,
+                include: CategoryEntity
+            }
+        );
     }
 
     async updateItem(id: string, item: ItemEntity): Promise<ItemEntity | null> {

@@ -23,6 +23,6 @@ router.delete("/api/items/:id", authGuard, itemController.deleteItem);
 router.get("/api/items/:id", authGuard, itemController.findItemById);
 router.get("/api/items", authGuard, itemController.getItems);
 router.put("/api/items/:id", authGuard, itemController.updateItem);
-router.get("/api/item/categories", authGuard, itemController.getCategories);
+router.get("/api/items-categories", itemController.getCategories);
 
 export default router;
