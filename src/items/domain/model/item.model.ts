@@ -4,6 +4,7 @@ export class ItemModel {
     public price: number;
     public userId: string;
     public imageIds: string[];
+    public categoryIds: string[];
 
     public setName(name: string): void | Error {
         if (name.length < 2) {
@@ -41,5 +42,9 @@ export class ItemModel {
 
     public setImagesIds(images: string[]): void {
         this.imageIds = images;
+    }
+
+    public setCategoryIds(categories: string[]): void {
+        this.categoryIds = categories;
     }
 }

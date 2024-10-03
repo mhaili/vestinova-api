@@ -1,5 +1,6 @@
 import {IItemRepository} from "./IItemRepository";
 import ItemEntity from "../entity/Item.entity";
+import CategoryEntity from "../entity/Category.entity";
 
 export class ItemRepository implements IItemRepository {
     async createItem(item): Promise<ItemEntity[]> {
@@ -19,5 +20,9 @@ export class ItemRepository implements IItemRepository {
     async updateItem(id: string, item: ItemEntity): Promise<ItemEntity | null> {
         await ItemEntity.update(item, {where: {id}});
         return await ItemEntity.findByPk(id);
+    }
+
+    async getCategories(): Promise<CategoryEntity[]> {
+        return await CategoryEntity.findAll();
     }
 }

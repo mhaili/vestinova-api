@@ -2,11 +2,13 @@ import express from "express";
 import cors from "cors";
 import sequelize from "../sequelize.config";
 import router from "./routes";
+import seedCategories from "../seedCategories";
 
 const initDb = async () => {
     try {
         await sequelize.authenticate();
         await sequelize.sync();
+        // await seedCategories();
     } catch (error) {
         console.error("Unable to connect to the database:", error);
     }

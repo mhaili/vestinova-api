@@ -6,6 +6,8 @@ import {DeleteItemService} from "../../domain/use-case/delete-item.service";
 import {FindItemByIdService} from "../../domain/use-case/find-item-by-id.service";
 import {GetItemsService} from "../../domain/use-case/get-items.service";
 import {UpdateItemService} from "../../domain/use-case/update-item.service";
+import CategoryEntity from "../../infrastructure/entity/Category.entity";
+import {GetCategoriesService} from "../../domain/use-case/get-categories.service";
 
 export class ItemController {
     private readonly itemRepository: ItemRepository;
@@ -16,11 +18,11 @@ export class ItemController {
         this.findItemById = this.findItemById.bind(this);
         this.getItems = this.getItems.bind(this);
         this.updateItem = this.updateItem.bind(this);
+        this.getCategories = this.getCategories.bind(this);
     }
     public async createItem(req, res): Promise<ItemEntity[] | Error> {
         const item = req.body.json;
         const images = req.files;
-        if (!isCreateItemDto(item)) return res.status(400).json({ item: item });
         try {
             const createdItem = await new CreateItemService(this.itemRepository).execute(item, images);
             console.log(createdItem)
@@ -72,6 +74,16 @@ export class ItemController {
             res.status(200).json(updatedItem);
         } catch (error) {
             res.status(400).json({ error: error.message });
+        }
+    }
+
+    public async getCategories(req, res): Promise<CategoryEntity[] | Error> {
+        try {
+            const categories = await new GetCategoriesService(this.itemRepository).getCategories();
+            return res.status(200).json(categories);
+        } catch (error) {
+            console.error('Error getting categories:', error);
+            return res.status(500).json({ error: 'An error occurred while fetching categories' });
         }
     }
 }

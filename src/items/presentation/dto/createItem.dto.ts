@@ -3,9 +3,11 @@ type CreateItemDto = {
     description: string;
     price: number;
     userId: string;
+    categoryIds: string[];
 }
 
 export function isCreateItemDto(object: any): object is CreateItemDto {
+    console.log("object", object)
     return 'name' in object &&
         typeof object.name === 'string' &&
         'description' in object &&
@@ -13,5 +15,7 @@ export function isCreateItemDto(object: any): object is CreateItemDto {
         'price' in object &&
         typeof object.price === 'number' &&
         'userId' in object &&
-        typeof object.userId === 'string';
+        typeof object.userId === 'string' &&
+        'categoryIds' in object &&
+        Array.isArray(object.categoryIds)
 }

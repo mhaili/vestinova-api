@@ -11,11 +11,17 @@ export class CreateItemService {
     }
     public async execute(item: ItemModel, images: File[]): Promise<ItemEntity[] | Error> {
         try {
-            const newItem = new ItemModel();
-            const nameError = newItem.setName(item.name);
-            const imageIds = await Promise.all(images.map(image => this.imageStorageService.uploadImage(image)));
+            const newItem = new ItemModel()
+             if (typeof item === "string") item = JSON.parse(item);
+
+            let imageIds = [];
+            if (images) {
+                imageIds = await Promise.all(images.map(image => this.imageStorageService.uploadImage(image)));
+            }
             newItem.setImagesIds(imageIds);
-            console.log(newItem);
+            newItem.setCategoryIds(item.categoryIds);
+
+            const nameError = newItem.setName(item.name);
             if (nameError instanceof Error) {
                 return nameError;
             }

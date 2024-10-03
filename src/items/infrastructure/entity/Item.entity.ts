@@ -1,5 +1,6 @@
 import sequelize from "../../../../sequelize.config";
 import {DataTypes, Model} from "sequelize";
+import CategoryEntity from "./Category.entity";
 
 class ItemEntity extends Model {
     public id!: string;
@@ -8,6 +9,7 @@ class ItemEntity extends Model {
     public price!: number;
     public userId!: string;
     public imageIds!: string[];
+    public categoryIds!: number[];
 }
 
 ItemEntity.init(
@@ -41,11 +43,18 @@ ItemEntity.init(
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: true,
         },
+        categoryIds: {
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            allowNull: true,
+        },
     },
     {
         sequelize,
         tableName: 'items',
     }
 );
+
+ItemEntity.belongsToMany(CategoryEntity, {through: 'ItemCategory'})
+CategoryEntity.belongsToMany(ItemEntity, {through: 'ItemCategory'})
 
 export default ItemEntity;

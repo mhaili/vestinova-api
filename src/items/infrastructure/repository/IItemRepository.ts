@@ -1,5 +1,6 @@
 import {ItemModel} from "../../domain/model/item.model";
 import ItemEntity from "../entity/Item.entity";
+import CategoryEntity from "../entity/Category.entity";
 
 export interface IItemRepository {
     createItem(item: ItemModel): Promise<ItemEntity[]>;
@@ -7,4 +8,5 @@ export interface IItemRepository {
     findItemById(id: string): Promise<ItemEntity>;
     findAllItems(pagination: number): Promise<ItemEntity[]>;
     updateItem(id: string, item: ItemEntity): Promise<ItemEntity | null>;
+    getCategories(): Promise<CategoryEntity[]>;
 }
