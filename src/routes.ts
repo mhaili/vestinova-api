@@ -24,5 +24,6 @@ router.get("/api/items/:id", authGuard, itemController.findItemById);
 router.get("/api/items", authGuard, itemController.getItems);
 router.put("/api/items/:id", authGuard, itemController.updateItem);
 router.get("/api/items-categories", itemController.getCategories);
+router.get("/api/items-search", itemController.searchItems);
 
 export default router;

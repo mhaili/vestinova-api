@@ -1,13 +1,13 @@
 import {ItemRepository} from "../../infrastructure/repository/ItemRepository";
 import ItemEntity from "../../infrastructure/entity/Item.entity";
 import {CreateItemUseCase} from "../../domain/use-case/create-item.use-case";
-import {isCreateItemDto} from "../dto/createItem.dto";
 import {DeleteItemUseCase} from "../../domain/use-case/delete-item.use-case";
 import {FindItemByIdUseCase} from "../../domain/use-case/find-item-by-id.use-case";
 import {GetItemsUseCase} from "../../domain/use-case/get-items.use-case";
 import {UpdateItemUseCase} from "../../domain/use-case/update-item.use-case";
 import CategoryEntity from "../../infrastructure/entity/Category.entity";
 import {GetCategoriesUseCase} from "../../domain/use-case/get-categories.use-case";
+import {SearchItemsUseCase} from "../../domain/use-case/search-items.use-case";
 
 export class ItemController {
     private readonly itemRepository: ItemRepository;
@@ -19,6 +19,7 @@ export class ItemController {
         this.getItems = this.getItems.bind(this);
         this.updateItem = this.updateItem.bind(this);
         this.getCategories = this.getCategories.bind(this);
+        this.searchItems = this.searchItems.bind(this);
     }
     public async createItem(req, res): Promise<ItemEntity[] | Error> {
         const item = req.body.json;
@@ -84,6 +85,17 @@ export class ItemController {
         } catch (error) {
             console.error('Error getting categories:', error);
             return res.status(500).json({ error: 'An error occurred while fetching categories' });
+        }
+    }
+
+    public async searchItems(req, res): Promise<ItemEntity[] | Error> {
+        const query = req._parsedUrl.search;
+        if (!query) return res.status(400).json({ error: 'Query is required' });
+        try {
+            const items = await new SearchItemsUseCase(this.itemRepository).searchItems(query);
+            res.status(200).json(items);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
         }
     }
 }
