@@ -9,4 +9,5 @@ export interface IItemRepository {
     findAllItems(pagination: number): Promise<ItemEntity[]>;
     updateItem(id: string, item: ItemEntity): Promise<ItemEntity | null>;
     getCategories(): Promise<CategoryEntity[]>;
+    searchItems(search: string): Promise<ItemEntity[]>;
 }

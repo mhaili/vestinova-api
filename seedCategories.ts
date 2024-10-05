@@ -6,6 +6,7 @@ const defaultCategories = [
     { id: 2, name: "Color", isParent: true },
     { id: 3, name: "Size", isParent: true },
     { id: 4, name: "Brand", isParent: true },
+    { id: 29, name: "Sexe", isParent: true },
 
     { id: 5, name: "Shirt", isParent: false, parentId: 1 },
     { id: 6, name: "Pants", isParent: false, parentId: 1 },
@@ -33,6 +34,9 @@ const defaultCategories = [
     { id: 25, name: "New Balance", isParent: false, parentId: 4 },
     { id: 26, name: "Converse", isParent: false, parentId: 4 },
     { id: 27, name: "Vans", isParent: false, parentId: 4 },
+
+    { id: 29, name: "Male", isParent: false, parentId: 29 },
+    { id: 30, name: "Female", isParent: false, parentId: 29 },
 ];
 
 async function seedCategories() {

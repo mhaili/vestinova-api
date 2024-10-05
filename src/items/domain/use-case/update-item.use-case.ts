@@ -1,6 +1,6 @@
 import ItemEntity from "../../infrastructure/entity/Item.entity";
 
-export class UpdateItemService {
+export class UpdateItemUseCase {
     private readonly itemRepository;
     constructor(itemRepository) {
         this.itemRepository = itemRepository;

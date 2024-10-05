@@ -1,13 +1,13 @@
 import {ItemRepository} from "../../infrastructure/repository/ItemRepository";
 import ItemEntity from "../../infrastructure/entity/Item.entity";
-import {CreateItemService} from "../../domain/use-case/create-item.service";
+import {CreateItemUseCase} from "../../domain/use-case/create-item.use-case";
 import {isCreateItemDto} from "../dto/createItem.dto";
-import {DeleteItemService} from "../../domain/use-case/delete-item.service";
-import {FindItemByIdService} from "../../domain/use-case/find-item-by-id.service";
-import {GetItemsService} from "../../domain/use-case/get-items.service";
-import {UpdateItemService} from "../../domain/use-case/update-item.service";
+import {DeleteItemUseCase} from "../../domain/use-case/delete-item.use-case";
+import {FindItemByIdUseCase} from "../../domain/use-case/find-item-by-id.use-case";
+import {GetItemsUseCase} from "../../domain/use-case/get-items.use-case";
+import {UpdateItemUseCase} from "../../domain/use-case/update-item.use-case";
 import CategoryEntity from "../../infrastructure/entity/Category.entity";
-import {GetCategoriesService} from "../../domain/use-case/get-categories.service";
+import {GetCategoriesUseCase} from "../../domain/use-case/get-categories.use-case";
 
 export class ItemController {
     private readonly itemRepository: ItemRepository;
@@ -24,7 +24,7 @@ export class ItemController {
         const item = req.body.json;
         const images = req.files;
         try {
-            const createdItem = await new CreateItemService(this.itemRepository).execute(item, images);
+            const createdItem = await new CreateItemUseCase(this.itemRepository).execute(item, images);
             console.log(createdItem)
             res.status(201).json(createdItem);
         } catch (error) {
@@ -36,7 +36,7 @@ export class ItemController {
         const itemId = req.params.id;
         const userId = req.user.id;
         try {
-            await new DeleteItemService(this.itemRepository).deleteItem(userId, itemId);
+            await new DeleteItemUseCase(this.itemRepository).deleteItem(userId, itemId);
             res.status(204).send();
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -46,7 +46,7 @@ export class ItemController {
     public async findItemById(req, res): Promise<ItemEntity | Error> {
         const itemId = req.params.id;
         try {
-            const item = await new FindItemByIdService(this.itemRepository).findItemById(itemId);
+            const item = await new FindItemByIdUseCase(this.itemRepository).findItemById(itemId);
             if (!item) return res.status(404).json({ error: 'Item not found' });
             res.status(200).json(item);
         } catch (error) {
@@ -58,7 +58,7 @@ export class ItemController {
         const pagination = req.query.pagination;
         if (!pagination) return res.status(400).json({ error: 'Pagination is required' });
         try {
-            const items = await new GetItemsService(this.itemRepository).getItems(pagination);
+            const items = await new GetItemsUseCase(this.itemRepository).getItems(pagination);
             res.status(200).json(items);
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -69,7 +69,7 @@ export class ItemController {
         const itemId = req.params.id;
         const item = req.body;
         try {
-            const updatedItem = await new UpdateItemService(this.itemRepository).updateItem(itemId, item);
+            const updatedItem = await new UpdateItemUseCase(this.itemRepository).updateItem(itemId, item);
             if (!updatedItem) return res.status(404).json({ error: 'Item not found' });
             res.status(200).json(updatedItem);
         } catch (error) {
@@ -79,7 +79,7 @@ export class ItemController {
 
     public async getCategories(req, res): Promise<CategoryEntity[] | Error> {
         try {
-            const categories = await new GetCategoriesService(this.itemRepository).getCategories();
+            const categories = await new GetCategoriesUseCase(this.itemRepository).getCategories();
             return res.status(200).json(categories);
         } catch (error) {
             console.error('Error getting categories:', error);

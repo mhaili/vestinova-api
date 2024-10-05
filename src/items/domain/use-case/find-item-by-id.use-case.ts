@@ -1,16 +1,15 @@
 import {ItemRepository} from "../../infrastructure/repository/ItemRepository";
-import CategoryEntity from "../../infrastructure/entity/Category.entity";
 
-export class GetCategoriesService {
+export class FindItemByIdUseCase {
     private readonly itemRepository: ItemRepository;
     constructor(itemRepository) {
         this.itemRepository = itemRepository;
     }
-    async getCategories(): Promise<CategoryEntity[] | Error> {
+    async findItemById(itemId) {
         try {
-            return await this.itemRepository.getCategories();
+            return await this.itemRepository.findItemById(itemId);
         } catch (error) {
-            return new Error(error);
+            return new Error("Error finding item");
         }
     }
 }

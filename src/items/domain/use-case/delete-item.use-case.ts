@@ -1,7 +1,7 @@
 import ItemEntity from "../../infrastructure/entity/Item.entity";
 import {ItemRepository} from "../../infrastructure/repository/ItemRepository";
 
-export class DeleteItemService {
+export class DeleteItemUseCase {
     private readonly itemRepository: ItemRepository;
     constructor(itemRepository) {
         this.itemRepository = itemRepository;

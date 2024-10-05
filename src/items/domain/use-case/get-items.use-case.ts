@@ -1,7 +1,7 @@
 import {IItemRepository} from "../../infrastructure/repository/IItemRepository";
 import ItemEntity from "../../infrastructure/entity/Item.entity";
 
-export class GetItemsService {
+export class GetItemsUseCase {
     private readonly itemRepository: IItemRepository;
     constructor(itemRepository: IItemRepository) {
         this.itemRepository = itemRepository;

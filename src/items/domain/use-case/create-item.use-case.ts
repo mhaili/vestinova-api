@@ -2,7 +2,7 @@ import {ItemModel} from "../model/item.model";
 import ItemEntity from "../../infrastructure/entity/Item.entity";
 import {ImageStorageService} from "../../../shared/service/imageStorage.service";
 
-export class CreateItemService {
+export class CreateItemUseCase {
     private readonly itemRepository;
     private readonly imageStorageService: ImageStorageService;
     constructor(itemRepository) {

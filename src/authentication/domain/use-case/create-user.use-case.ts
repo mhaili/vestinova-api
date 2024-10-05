@@ -3,7 +3,7 @@ import {UserRepository} from "../../infrastructure/repository/UserRepository";
 import hashPasswordService from "../../../shared/service/hashPassword.service";
 import jwtService from "../../../shared/service/jwt.service";
 
-export class CreateUserService {
+export class CreateUserUseCase {
     constructor(
         private readonly userRepository: UserRepository
     ) {}
