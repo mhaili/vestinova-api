@@ -31,7 +31,10 @@ export class ItemRepository implements IItemRepository {
         return await ItemEntity.findAll(
             {
                 limit: pagination,
-                include: CategoryEntity
+                include: {
+                    model: CategoryEntity,
+                    attributes: ['isParent', 'name', "parentId"]
+                }
             }
         );
     }
