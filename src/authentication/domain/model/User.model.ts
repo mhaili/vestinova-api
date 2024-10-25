@@ -3,6 +3,7 @@ export class UserModel {
     public lastname: string;
     public email: string;
     public password: string;
+    public avatar?: string;
 
     public setPassword(password: string): void | Error {
         if (password.length < 8) {
@@ -48,5 +49,9 @@ export class UserModel {
             return new Error("Lastname is too long");
         }
         this.lastname = lastname;
+    }
+
+    public setAvatar(avatar: string): void | Error {
+        this.avatar = avatar;
     }
 }
