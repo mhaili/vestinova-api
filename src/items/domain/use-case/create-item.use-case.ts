@@ -9,18 +9,17 @@ export class CreateItemUseCase {
         this.itemRepository = itemRepository;
         this.imageStorageService = new ImageStorageService();
     }
-    public async execute(item: ItemModel, images: File[]): Promise<ItemEntity[] | Error> {
+    public async execute(item: ItemModel, userId: string, images: File[]): Promise<ItemEntity[] | Error> {
         try {
             const newItem = new ItemModel()
              if (typeof item === "string") item = JSON.parse(item);
 
-            let imageIds = [];
             if (images) {
+                let imageIds = [];
                 imageIds = await Promise.all(images.map(image => this.imageStorageService.uploadImage(image)));
+                newItem.setImagesIds(imageIds);
             }
-            newItem.setImagesIds(imageIds);
             newItem.setCategoryIds(item.categoryIds);
-
             const nameError = newItem.setName(item.name);
             if (nameError instanceof Error) {
                 return nameError;
@@ -33,7 +32,7 @@ export class CreateItemUseCase {
             if (priceError instanceof Error) {
                 return priceError;
             }
-            const userIdError = newItem.setUserId(item.userId);
+            const userIdError = newItem.setUserId(userId);
             if (userIdError instanceof Error) {
                 return userIdError;
             }
