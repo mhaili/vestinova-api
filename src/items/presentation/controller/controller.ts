@@ -22,13 +22,15 @@ export class ItemController {
         this.searchItems = this.searchItems.bind(this);
     }
     public async createItem(req, res): Promise<ItemEntity[] | Error> {
-        const item = req.body.json;
+        const item = req.body;
         const images = req.files;
+        const userId = req.user.id;
         try {
-            const createdItem = await new CreateItemUseCase(this.itemRepository).execute(item, images);
+            const createdItem = await new CreateItemUseCase(this.itemRepository).execute(item, userId, images);
             console.log(createdItem)
             res.status(201).json(createdItem);
         } catch (error) {
+            console.log(error)
             res.status(400).json({ error: error.message });
         }
     }

@@ -5,7 +5,7 @@ import {col, fn, Op, Sequelize} from 'sequelize';
 import sequelize from "../../../../sequelize.config";
 
 export class ItemRepository implements IItemRepository {
-    async createItem(item): Promise<ItemEntity[]> {
+    async createItem(item: any): Promise<ItemEntity> {
         const newItem = await ItemEntity.create(item);
         if (item.categoryIds && item.categoryIds.length > 0) {
             const categories = await CategoryEntity.findAll({
@@ -17,11 +17,7 @@ export class ItemRepository implements IItemRepository {
                await newItem.addCategoryEntity(category)
            }
         }
-        return await ItemEntity.findAll(
-            {
-                include: CategoryEntity
-            }
-        );
+        return newItem;
     }
     async deleteItem(id): Promise<void> {
         await ItemEntity.destroy({where: {id}});
